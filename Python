@@ -1,0 +1,34 @@
+CLEAN TABLE RELATED HEALTH IN ARGENTINA
+#  Import libraries 
+import pandas as pd 
+# Load the document 
+dtypes = {'column10': 'int', 'column11': 'str', 'column13': 'float'}
+read_csv = pd.read_csv(r"C:\Users\legion\OneDrive\Documents\data analytics\Practice\casos_covid19_2020.csv", encoding = 'iso-8859-1', low_memory= False)
+Data_covid = read_csv
+# Read head
+Data_covid.head()
+# Clean duplicates 
+Data_covid.drop_duplicates()
+# Drop columns
+Data_covid.drop(columns = "fallecido", inplace = True)
+Data_covid.drop(columns = "fecha_alta", inplace = True)
+# Replace Nan value to "Puerto Rico" and "1.0"
+df = Data_covid
+condition = df['provincia'].str.contains('Buenos Aires', case= False, na= False)
+df.loc[condition, 'barrio'] = df.loc[condition, 'barrio']. fillna('Puerto Madero')
+df.loc[condition, 'comuna'] = df.loc[condition,'comuna']. fillna('1.0')
+CLEAN TABLE RELATED STUDENT MENTAL HEALTH
+# Load the table
+read_csv = pd.read_csv(r"C:\Users\legion\OneDrive\Documents\data analytics\Practice\Student Mental health.csv", encoding = 'iso-8859-1')
+# Clean duplicates 
+read_csv.drop_duplicates()
+# Read the first rows 
+read_csv.head()
+# Rename the name column
+Health_mental = Health_mental.rename(columns = {'Age':'edad'})
+# Merge the tables 
+merged_data = pd.merge(Health_mental, Data_covid, on = 'edad', how = 'inner')
+# drop column Fecha de nacimiento 
+Health_data.drop(columns = "fecha_fallecimiento", inplace = True)
+# Delete missing values
+Health_data = Health_data.dropna(how = 'any')
